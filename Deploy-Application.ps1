@@ -64,7 +64,7 @@ Try {
 	##*===============================================
 	## Variables: Application
 	[string]$appVendor = 'Psychology Software Tools'
-	[string]$appName = 'E-Prime Subject Station'
+	[string]$appName = 'E-Prime'
 	[string]$appVersion = '3.0'
 	[string]$appArch = 'x86'
 	[string]$appLang = 'EN'
@@ -139,7 +139,7 @@ Try {
 	#	}
 
 		## <Perform Installation tasks here>
-		Execute-MSI -Action Install -Path "$dirFiles\E-Prime 3.0 Subject Station.msi" -AddParameters "/qn SILENTREGISTRATION=`"1`" MACHINE.AUTOUPDATE.USEMACHINESETTINGS=`"1`" MACHINE.AUTOUPDATE.NEVERPROMPTFORUPDATES=`"1`" MACHINE.OPTIONS.FIRSTOPEN.QUIET=`"1`""
+		Execute-MSI -Action Install -Path "$dirFiles\E-Prime 3.0.msi" -AddParameters "/qn SILENTREGISTRATION=`"1`" MACHINE.AUTOUPDATE.USEMACHINESETTINGS=`"1`" MACHINE.AUTOUPDATE.NEVERPROMPTFORUPDATES=`"1`" MACHINE.OPTIONS.FIRSTOPEN.QUIET=`"1`""
 
 
 		##*===============================================
@@ -148,13 +148,17 @@ Try {
 		[string]$installPhase = 'Post-Installation'
 
 		## <Perform Post-Installation tasks here>
-		Execute-Process -Path 'C:\Program Files (x86)\PST\E-Prime 3.0 Subject Station (3.0.3.31)\Program\LicenseManager.exe' -Parameters '/sr /user="Student" /institution="MSUDenver" /serial="***LOLNOPE***"' -WaitForMsiExec:$true
+		Execute-Process -Path 'C:\Program Files (x86)\PST\E-Prime 3.0\Program\LicenseManager.exe' -Parameters '/sr /user="Student" /institution="MSUDenver" /serial="***LOLNOPE***"' -WaitForMsiExec:$true
 
-		New-Shortcut -Path "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\E-Run 3.lnk" `
-		    -TargetPath "C:\Program Files (x86)\PST\E-Prime 3.0 Subject Station (3.0.3.31)\Program\E-Run.exe" `
-		    -Description 'E-Run 3.0' `
+		 New-Shortcut -Path "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\E-Run 3.lnk" `
+		   -TargetPath "C:\Program Files (x86)\PST\E-Prime 3.0\Program\E-Run.exe" `
+	     -Description 'E-Run 3.0'
+		 New-Shortcut -Path "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\E-Studio 3.lnk" `
+				 -TargetPath "C:\Program Files (x86)\PST\E-Prime 3.0\Program\E-Studio.exe" `
+				 -Description 'E-Studio 3.0'
 
-		Copy-File -Path "$dirFiles\E-Run 3.lnk" -Destination "$envCommonDesktop\E-Run 3.lnk"
+		 Copy-File -Path "$dirFiles\E-Run 3.lnk" -Destination "$envCommonDesktop\E-Run 3.lnk"
+		 Copy-File -Path "$dirFiles\E-Studio 3.lnk" -Destination "$envCommonDesktop\E-Studio 3.lnk"
 		## Display a message at the end of the install
 		If (-not $useDefaultMsi) {
 
@@ -220,8 +224,8 @@ Catch {
 # SIG # Begin signature block
 # MIIZ7wYJKoZIhvcNAQcCoIIZ4DCCGdwCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCAke5K6Fo8Ram/i
-# pjcXFguRGpb6Q1ekNIIBpo/e6W3AfqCCFFwwggQUMIIC/KADAgECAgsEAAAAAAEv
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCDLw69mEZPTqNr0
+# zVWTWiPLWJo6pYuiMFaGrn2Ztk5soqCCFFwwggQUMIIC/KADAgECAgsEAAAAAAEv
 # TuFS1zANBgkqhkiG9w0BAQUFADBXMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xv
 # YmFsU2lnbiBudi1zYTEQMA4GA1UECxMHUm9vdCBDQTEbMBkGA1UEAxMSR2xvYmFs
 # U2lnbiBSb290IENBMB4XDTExMDQxMzEwMDAwMFoXDTI4MDEyODEyMDAwMFowUjEL
@@ -335,26 +339,26 @@ Catch {
 # CxMISW5Db21tb24xJTAjBgNVBAMTHEluQ29tbW9uIFJTQSBDb2RlIFNpZ25pbmcg
 # Q0ECEAcDcdEPeVpAcZkrlAdim+IwDQYJYIZIAWUDBAIBBQCggYQwGAYKKwYBBAGC
 # NwIBDDEKMAigAoAAoQKAADAZBgkqhkiG9w0BCQMxDAYKKwYBBAGCNwIBBDAcBgor
-# BgEEAYI3AgELMQ4wDAYKKwYBBAGCNwIBFTAvBgkqhkiG9w0BCQQxIgQgBCv37g2v
-# DM7mPgI3RXp9T4YmTv+mLz5Tll+qiDhO/wYwDQYJKoZIhvcNAQEBBQAEggEAmiSW
-# kPywCXy6Om7gvwPKikQtUNSG3syAnozk/wUh1J84l4CR7abRyevjUP8a9OTVIsAu
-# u9PqrVUWanf+l2SNgzaIPTkHGWGHaYMVa3M9/hU5XVNbIcRf+7ta3ajFe/xAgt9o
-# BSPGep2tdpQVtnd4ruPE9QvsP7gGMh/04AaHiFNkdjbW7a305TMI1lWC90ObR/Cd
-# gxCz6hFfedu1eQUza4jutQ8K6BIwkSUTnphmFXMPjy3Yd+wKBU+Vuc6B0Y+qzmJQ
-# mjI2KabQXPryVTY+1FpLNvYpvucttYnRYHwHUH3skh7itVWy+A/1Il17GzsvN4iv
-# /rxGXnK07tnEuAmOkKGCAqIwggKeBgkqhkiG9w0BCQYxggKPMIICiwIBATBoMFIx
+# BgEEAYI3AgELMQ4wDAYKKwYBBAGCNwIBFTAvBgkqhkiG9w0BCQQxIgQgphr51TQJ
+# pA0kyjngKyAL8vdLrzzsTR/+VAnbllQ55FEwDQYJKoZIhvcNAQEBBQAEggEARn4E
+# M0SFbvMypl/gs1wygbYkCF9jBeb3TSSa1rRnnwPP2FE6MEI02MATL4HvGyWXBTx7
+# qp3S+zvtdPzQSgK1PRcDOnGFe7lBduRpkAMjSGTXZVCQVySbRwrGlRSMWg7GuEdb
+# cMZcqzKM6K+hmvOB1lbAjk4DX0I8qZrGJgiWMCVqLiZlvDjs7MEvvzKS3LNX2xB/
+# 7LaMwdU3bMiuyFQ+cHh6YtuITJigsU20nh1Qnr7gRwIXeSJZDtIEIfJhEi3ysYfR
+# NDTfmzJdjpUJhLAmuzDfaHTRbBY3/gjJyKsCa6EZpFq9CmysAeUYMyDoD0RwULeV
+# SjOO9a+acc955CYOvqGCAqIwggKeBgkqhkiG9w0BCQYxggKPMIICiwIBATBoMFIx
 # CzAJBgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQD
 # Ex9HbG9iYWxTaWduIFRpbWVzdGFtcGluZyBDQSAtIEcyAhIRIdaZp2SXPvH4Qn7p
 # GcxTQRQwCQYFKw4DAhoFAKCB/TAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
-# CSqGSIb3DQEJBTEPFw0xODA4MjMyMjEyMzdaMCMGCSqGSIb3DQEJBDEWBBS9BFSf
-# Hthqm+jPyrlDIYkiZBzuczCBnQYLKoZIhvcNAQkQAgwxgY0wgYowgYcwgYQEFGO4
+# CSqGSIb3DQEJBTEPFw0xODEwMDMyMDA4MjFaMCMGCSqGSIb3DQEJBDEWBBQMeHY/
+# hsVfCIYurAW7xyYbuJL+dDCBnQYLKoZIhvcNAQkQAgwxgY0wgYowgYcwgYQEFGO4
 # L6th9YOQlpUFCwAknFApM+x5MGwwVqRUMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
 # ExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIFRpbWVzdGFt
 # cGluZyBDQSAtIEcyAhIRIdaZp2SXPvH4Qn7pGcxTQRQwDQYJKoZIhvcNAQEBBQAE
-# ggEABXdAR0H6PDD0WsTdl3mQi3Sr6XhnDpAcu9NkN6LT9VsRipjcisOCnz4WCIMu
-# 4N/MlbgA+pSBCaA1T154bTRTeku5Mir+jxCKG5zMlvbBMbmAW3zia6fVMs2hMYiw
-# HQVLmpyiQkjD1LLjSLF3WfGz4LmSpBIxr4dq/JvabckODGGKSYYCsEMoG10eygS0
-# t6n03k0NXil/QeAWXnMa5Mxp1CgxgidcUwRGV5QHXS91q7KmJ75wmgXnTC23AEF2
-# l5Y1J+D9/AjsOCIGdztf0wkmZgtpXNGf0adulDrIHQeziH8/ZliFc5g/n5GRy97A
-# fI5TkKbAQTmLuwNu1wf9a8nxIQ==
+# ggEAauEOC3qoWcmeWm+fCPt6pGRfw/Bh5UveyKkmwxcXHK/wpH712vA/SlWG8GrI
+# qCpyrCztx3f3tX3j57cLJh+QClWnBRzpNdoPcCZl43a9o0rEWCJRgHp1K/o/zb6p
+# dwdCMUwPMFAYHczwvrfa9mpt4uuITRiH5FF8ykUtYHSpF+3aYvQHD2nx62ae50GW
+# MDlgNDAhdU/uo3Q0Wansds0iCXO3kM/NwoMbRrcMVVGUYZM71Ris/Ae9Q0VHaEyv
+# vRpADRu97Y9U5En8azixBDRuYWP5eSO4UAGwxNWSclUOFG29oVIPTzqrWjzdqKVQ
+# dZywNbo68oaF5GkWwFFuIQvt0A==
 # SIG # End signature block
